@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
   pid = fork();
   if(pid < 0) {
     fprintf(stderr, "Fork failed");
+    exit(EXIT_FAILURE);
   } else if(pid == 0) {
     close(fd[0]);
     dup2(fd[1], fileno(stdout));
@@ -67,6 +68,5 @@ int main(int argc, char *argv[]) {
   }
 
   execlp("diskutil", "diskutil", "erasevolume", "HFS+", "RAM Disk", path, NULL);
-
-  return 0;
+  return EXIT_FAILURE;
 }
