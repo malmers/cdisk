@@ -7,6 +7,10 @@
 #define GIGABYTE 2097152
 #define PATH_SIZE 100
 
+void usage() {
+  fprintf(stderr, "usage: ramdisk size\n");
+}
+
 char *trimwhitespace(char *str) {
   // http://stackoverflow.com/questions/122616/
   char *end;
@@ -34,8 +38,8 @@ int main(int argc, char *argv[]) {
   int fd[2];
 
   if(argc < 2) {
-    fprintf(stderr, "Too few arguments\n");
-    return 1;
+    usage();
+    exit(EXIT_FAILURE);
   }
 
   size = strtol(argv[1], NULL, 10);
@@ -54,7 +58,7 @@ int main(int argc, char *argv[]) {
     close(fd[0]);
     dup2(fd[1], fileno(stdout));
     execlp("hdiutil", "hdiutil", "attach", "-nomount", ram, NULL);
-    exit(1);
+    exit(EXIT_FAILURE);
   } else {
     close(fd[1]);
     wait(NULL);
