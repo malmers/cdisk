@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#include <getopt.h>
 
 #define GIGABYTE 2097152
 #define PATH_SIZE 100
@@ -34,7 +35,8 @@ char *trimwhitespace(char *str) {
 int main(int argc, char *argv[]) {
   char path[PATH_SIZE];
   char ram[80];
-  int size, pid;
+  char* disk_name = "RAM Disk";
+  int size, pid, c;
   int fd[2];
 
   if(argc < 2) {
@@ -42,7 +44,30 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  size = strtol(argv[1], NULL, 10);
+  static struct option long_opts[] =
+   {
+    {"help",     no_argument,         0, 'h'},
+    {"version",  no_argument,         0, 'v'},
+    {"name",    required_argument,   0, 'n'},
+    {0,0,0,0}
+   };
+
+  while ((c = getopt_long(argc, argv, "n:", long_opts, 0)) != -1) {
+    switch(c) {
+      case 'n':
+        disk_name = optarg;
+        break;
+      default:
+        abort();
+    }
+  }
+
+  if (optind < argc) {
+    size = strtol(argv[optind++], NULL, 10);
+  } else {
+    exit(EXIT_FAILURE);
+  }
+
   sprintf(ram, "ram://%d", size*GIGABYTE);
 
   if(pipe(fd) == -1) {
@@ -71,6 +96,6 @@ int main(int argc, char *argv[]) {
     trimwhitespace(path);
   }
 
-  execlp("diskutil", "diskutil", "erasevolume", "HFS+", "RAM Disk", path, NULL);
+  execlp("diskutil", "diskutil", "erasevolume", "HFS+", disk_name, path, NULL);
   return EXIT_FAILURE;
 }
