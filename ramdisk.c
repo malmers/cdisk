@@ -9,7 +9,7 @@
 #define PATH_SIZE 100
 
 void usage() {
-  fprintf(stderr, "usage: ramdisk size\n");
+  fprintf(stderr, "usage: ramdisk [-n name] size\n");
 }
 
 char *trimwhitespace(char *str) {
@@ -39,11 +39,6 @@ int main(int argc, char *argv[]) {
   int size, pid, c;
   int fd[2];
 
-  if(argc < 2) {
-    usage();
-    exit(EXIT_FAILURE);
-  }
-
   static struct option long_opts[] =
    {
     {"help",     no_argument,         0, 'h'},
@@ -65,6 +60,7 @@ int main(int argc, char *argv[]) {
   if (optind < argc) {
     size = strtol(argv[optind++], NULL, 10);
   } else {
+    usage();
     exit(EXIT_FAILURE);
   }
 
