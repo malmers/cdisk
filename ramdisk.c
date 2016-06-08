@@ -8,8 +8,16 @@
 #define GIGABYTE 2097152
 #define PATH_SIZE 100
 
+char* helptext = "Usage: ramdisk [options...] <size>\n"
+"Options:\n"
+" -n, --name    Name the created ramdisk";
+
 void usage() {
   fprintf(stderr, "usage: ramdisk [-n name] size\n");
+}
+
+void help() {
+  printf("%s\n", helptext);
 }
 
 char *trimwhitespace(char *str) {
@@ -47,8 +55,11 @@ int main(int argc, char *argv[]) {
     {0,0,0,0}
    };
 
-  while ((c = getopt_long(argc, argv, "n:", long_opts, 0)) != -1) {
+  while ((c = getopt_long(argc, argv, "hn:", long_opts, 0)) != -1) {
     switch(c) {
+      case 'h':
+        help();
+        exit(EXIT_SUCCESS);
       case 'n':
         disk_name = optarg;
         break;
