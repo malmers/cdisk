@@ -7,6 +7,7 @@
 
 #define GIGABYTE 2097152
 #define PATH_SIZE 100
+#define VERSION "0.1"
 
 char* helptext = "Usage: ramdisk [options...] <size>\n"
 "Options:\n"
@@ -18,6 +19,10 @@ void usage() {
 
 void help() {
   printf("%s\n", helptext);
+}
+
+void version() {
+  printf("Version: %s\n", VERSION);
 }
 
 char *trimwhitespace(char *str) {
@@ -55,10 +60,13 @@ int main(int argc, char *argv[]) {
     {0,0,0,0}
    };
 
-  while ((c = getopt_long(argc, argv, "hn:", long_opts, 0)) != -1) {
+  while ((c = getopt_long(argc, argv, "hvn:", long_opts, 0)) != -1) {
     switch(c) {
       case 'h':
         help();
+        exit(EXIT_SUCCESS);
+      case 'v':
+        version();
         exit(EXIT_SUCCESS);
       case 'n':
         disk_name = optarg;
