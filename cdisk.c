@@ -4,10 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <getopt.h>
-
-#define GIGABYTE 2097152
-#define PATH_SIZE 100
-#define VERSION "0.1"
+#include "cdisk.h"
 
 char* helptext = "Usage: ramdisk [options...] <size>\n"
 "Options:\n"
