@@ -16,5 +16,7 @@ To create a ram disk with a size of 2GB, enter:
 
 Both dependencies are command line utilities that comes preinstalled with OS X.
 
-## Build
+## Build and Install
     make
+    make install
+
