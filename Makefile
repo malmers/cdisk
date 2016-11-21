@@ -11,4 +11,3 @@ clean:
 
 install:
 	cp $(TARGET) $(DESTDIR)/$(TARGET)
-
