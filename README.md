@@ -1,13 +1,13 @@
-# Ramdisk
+# cdisk
 A small program for creating ram disks in OS X written in c.
 
 ## Usage
-    ramdisk X
+    cdisk X
 
 where X is the size of the ram disk to be created in Gigabytes.
 To create a ram disk with a size of 2GB, enter:
 
-    ramdisk 2
+    cdisk 2
 
 ## Development
 ### Software requirements
