@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall
-TARGET = ramdisk
+TARGET = cdisk
 
 all: $(TARGET).c
 	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c
